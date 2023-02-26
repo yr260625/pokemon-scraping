@@ -1,4 +1,6 @@
+"""ポケモン諸元"""
 import json
+from dataclasses import dataclass
 from src.pokedex.model.vo.ability import Abilities
 from src.pokedex.model.vo.number import Number
 from src.pokedex.model.vo.name import Name
@@ -6,7 +8,6 @@ from src.pokedex.model.vo.category import Category
 from src.pokedex.model.vo.type import Types
 from src.pokedex.model.vo.body_measurement import BodyMeasurement
 from src.pokedex.model.vo.stats import Stats
-from dataclasses import dataclass
 
 
 @dataclass(frozen=False)
@@ -16,7 +17,7 @@ class PokemonSpec:
 
     def __init__(
         self,
-        id: Number,
+        pokemon_id: Number,
         name: Name,
         category: Category,
         types: Types,
@@ -27,7 +28,7 @@ class PokemonSpec:
         """コンストラクタ
 
         Args:
-            id (Number): 図鑑No.
+            pokemon_id (Number): 図鑑No.
             name (Name): ポケモン名
             category (Category): ポケモン分類
             types (Types): ポケモンタイプ
@@ -35,7 +36,7 @@ class PokemonSpec:
             abilities (Abilities): ポケモン特性
             stats (Stats): ポケモン能力値
         """
-        self.id = id
+        self.pokemon_id = pokemon_id
         self.name = name
         self.category = category
         self.types = types
@@ -53,7 +54,7 @@ class PokemonSpec:
         _abilities_dict = json.loads(self.abilities.to_json())
 
         return json.dumps({
-            'ずかんNo.': self.id.value,
+            'ずかんNo.': self.pokemon_id.value,
             '名前': self.name.value,
             '分類': self.category.value,
             'タイプ': _types_dict,
@@ -69,8 +70,8 @@ class PokemonSpec:
         }, ensure_ascii=False)
 
     @staticmethod
-    def createFromRawSpec(raw_spec: str):
-        """ポケモン諸元値(raw)からポケモン諸元値オブジェクトを生成
+    def create(raw_spec: str):
+        """ポケモン諸元値ファクトリー
 
         Args:
             raw_spec (str): ポケモン諸元値(raw)

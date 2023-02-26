@@ -1,3 +1,4 @@
+"""ポケモンタイプ 値オブジェクト"""
 import json
 from typing import Final
 from dataclasses import dataclass
@@ -5,30 +6,30 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Type:
-    """ポケモンのタイプを保持する。
+    """ポケモンタイプを保持する。
     """
-    id: Final[int]
+    type_id: Final[int]
     name: Final[str]
 
-    def __init__(self, id: int):
+    def __init__(self, type_id: int):
         """コンストラクタ
 
         Args:
-            id (int): タイプID
+            type_id (int): タイプID
         """
-        self.__validate(id)
-        object.__setattr__(self, "id", id)
-        object.__setattr__(self, "name", self.getName(id))
+        self.__valtype_idate(type_id)
+        object.__setattr__(self, "type_id", type_id)
+        object.__setattr__(self, "name", self.getName(type_id))
 
-    def __validate(self, id: int):
-        if id < 0:
+    def __valtype_idate(self, type_id: int):
+        if type_id < 0:
             raise ValueError("不正なタイプIDを検出しました。")
 
-    def getName(self, id: int) -> str:
+    def getName(self, type_id: int) -> str:
         """タイプ名取得
 
         Args:
-            id (int): タイプID
+            type_id (int): タイプID
 
         Returns:
             str: タイプ名
@@ -54,10 +55,10 @@ class Type:
             17:  "はがね",
             18:  "フェアリー",
         }
-        if id not in _type_definition.keys():
+        if type_id not in _type_definition:
             raise ValueError("不正なタイプIDを検出しました。")
 
-        return _type_definition[id]
+        return _type_definition[type_id]
 
 
 @dataclass(frozen=True)
@@ -73,22 +74,22 @@ class Types:
             str: JSON文字列
         """
         _mapping: Final[dict] = {}
-        for index, type in enumerate(self.types, 1):
-            _mapping.setdefault(index, type.name)
+        for index, type_obj in enumerate(self.types, 1):
+            _mapping.setdefault(index, type_obj.name)
         return json.dumps(_mapping, ensure_ascii=False)
 
     @staticmethod
-    def create(id1: int, id2: int):
+    def create(type_id1: int, type_id2: int):
         """タイプ一覧ファクトリー
 
         Args:
-            id1 (int): タイプID
-            id2 (int): タイプID
+            type_id1 (int): タイプID
+            type_id2 (int): タイプID
 
         Returns:
             Types: タイプ一覧オブジェクト
         """
         return Types((
-            Type(id1),
-            Type(id2)
+            Type(type_id1),
+            Type(type_id2)
         ))

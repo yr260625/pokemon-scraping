@@ -1,3 +1,4 @@
+"""ポケモン特性 値オブジェクト"""
 import json
 from typing import Final
 from dataclasses import dataclass
@@ -7,25 +8,25 @@ from dataclasses import dataclass
 class Ability:
     """ポケモン特性を保持する。
     """
-    id: Final[int]
+    pokemon_id: Final[int]
     name: Final[str]
 
-    def __init__(self, id: int, name: str):
+    def __init__(self, pokemon_id: int, name: str):
         """コンストラクタ
 
         Args:
-            id (int): 特性ID
+            pokemon_id (int): 特性ID
             name (str): 特性名
         """
         self.__validate(name)
-        object.__setattr__(self, "id", id)
+        object.__setattr__(self, "pokemon_id", pokemon_id)
         object.__setattr__(self, "name", name)
 
     def __validate(self, name: str):
         """バリデーション
 
         Args:
-            id (int): 特性ID
+            pokemon_id (int): 特性ID
             name (str): 特性名
 
         Raises:
@@ -49,7 +50,7 @@ class Abilities:
         """
         _mapping: Final[dict] = {}
         for ability in self.abilities:
-            _mapping.setdefault(ability.id, ability.name)
+            _mapping.setdefault(ability.pokemon_id, ability.name)
         return json.dumps(_mapping, ensure_ascii=False)
 
     @staticmethod

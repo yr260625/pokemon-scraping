@@ -1,3 +1,4 @@
+"""図鑑No. 値オブジェクト"""
 from typing import Final
 from dataclasses import dataclass
 

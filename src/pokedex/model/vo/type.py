@@ -34,7 +34,7 @@ class Type:
         Returns:
             str: タイプ名
         """
-        _type_definition: Final[dict] = {
+        _type_definition: Final[dict[int, str]] = {
             0:  "なし",
             1:  "ノーマル",
             2:  "ほのお",
@@ -73,18 +73,18 @@ class Types:
         Returns:
             str: JSON文字列
         """
-        _mapping: Final[dict] = {}
+        type_map: dict[int, str] = {}
         for index, type_obj in enumerate(self.types, 1):
-            _mapping.setdefault(index, type_obj.name)
-        return json.dumps(_mapping, ensure_ascii=False)
+            type_map.setdefault(index, type_obj.name)
+        return json.dumps(type_map, ensure_ascii=False)
 
     @staticmethod
     def create(type_id1: int, type_id2: int):
         """タイプ一覧ファクトリー
 
         Args:
-            type_id1 (int): タイプID
-            type_id2 (int): タイプID
+            type_id1 (int): タイプID1
+            type_id2 (int): タイプID2
 
         Returns:
             Types: タイプ一覧オブジェクト

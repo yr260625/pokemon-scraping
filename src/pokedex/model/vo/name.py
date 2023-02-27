@@ -27,5 +27,5 @@ class Name:
         Raises:
             ValueError: ポケモン名が空白
         """
-        if len(value) <= 0:
+        if len(value) == 0:
             raise ValueError("不正なポケモン名を検出しました。")

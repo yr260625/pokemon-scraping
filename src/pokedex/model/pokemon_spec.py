@@ -50,17 +50,17 @@ class PokemonSpec:
         Returns:
             str: JSON文字列
         """
-        _types_dict = json.loads(self.types.to_json())
-        _abilities_dict = json.loads(self.abilities.to_json())
+        types_map = json.loads(self.types.to_json())
+        abilities_map = json.loads(self.abilities.to_json())
 
         return json.dumps({
             'ずかんNo.': self.pokemon_id.value,
             '名前': self.name.value,
             '分類': self.category.value,
-            'タイプ': _types_dict,
+            'タイプ': types_map,
             '高さ': self.body_measurement.height,
             '重さ': self.body_measurement.weight,
-            '特性': _abilities_dict,
+            '特性': abilities_map,
             'HP': self.stats.hit_point,
             'こうげき': self.stats.attack,
             'ぼうぎょ': self.stats.defense,
@@ -79,29 +79,29 @@ class PokemonSpec:
         Returns:
             PokemonSpec: ポケモン諸元値オブジェクト
         """
-        _dict = json.loads(raw_spec)
-        _pokemon = _dict["pokemon"]
+        spec_map = json.loads(raw_spec)
+        pokemon = spec_map["pokemon"]
 
-        _number = Number(_pokemon['zukan_no'])
-        _name = Name(_pokemon['name'])
-        _category = Category(_pokemon['bunrui'])
-        _types = Types.create(_pokemon['type_1'], _pokemon['type_2'])
-        _body = BodyMeasurement(_pokemon['takasa'], _pokemon['omosa'])
-        _abilities = Abilities.create(_dict['abilities'])
-        _stats = Stats(
-            _pokemon['spec_hp'],
-            _pokemon['spec_kougeki'],
-            _pokemon['spec_bougyo'],
-            _pokemon['spec_tokukou'],
-            _pokemon['spec_tokubou'],
-            _pokemon['spec_subayasa']
+        number = Number(pokemon['zukan_no'])
+        name = Name(pokemon['name'])
+        category = Category(pokemon['bunrui'])
+        types = Types.create(pokemon['type_1'], pokemon['type_2'])
+        body = BodyMeasurement(pokemon['takasa'], pokemon['omosa'])
+        abilities = Abilities.create(spec_map['abilities'])
+        stats = Stats(
+            pokemon['spec_hp'],
+            pokemon['spec_kougeki'],
+            pokemon['spec_bougyo'],
+            pokemon['spec_tokukou'],
+            pokemon['spec_tokubou'],
+            pokemon['spec_subayasa']
         )
         return PokemonSpec(
-            _number,
-            _name,
-            _category,
-            _types,
-            _body,
-            _abilities,
-            _stats
+            number,
+            name,
+            category,
+            types,
+            body,
+            abilities,
+            stats
         )

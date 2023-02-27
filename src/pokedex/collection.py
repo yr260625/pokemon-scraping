@@ -39,8 +39,8 @@ class Pokedex():
         """
         try:
             for pokemon_id in range(self.MIN_POKEMON_NUMBER, self.MAX_POKEMON_NUMBER + 1):
-                _pokemon_spec = self.repository.find_by_id(pokemon_id)
-                self.add(_pokemon_spec)
+                pokemon_spec = self.repository.find_by_id(pokemon_id)
+                self.add(pokemon_spec)
                 time.sleep(0.5)
         except Exception as error:
             print('エラーが発生しました。: No.=' + f'{pokemon_id}')
@@ -53,7 +53,7 @@ class Pokedex():
         Returns:
             str: JSON文字列
         """
-        _specs = []
+        specs: list[dict] = []
         for spec in self.pokedex:
-            _specs.append(json.loads(spec.to_json()))
-        return json.dumps({"全ポケモンリスト": _specs}, ensure_ascii=False)
+            specs.append(json.loads(spec.to_json()))
+        return json.dumps({"全ポケモンリスト": specs}, ensure_ascii=False)

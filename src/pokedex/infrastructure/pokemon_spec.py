@@ -13,7 +13,7 @@ class PokemonSpecRepository(IPokemonSpecRepository):
         IPokemonSpecRepository (_type_): ポケモン諸元値リポジトリインターフェース
     """
 
-    BASE_URL: Final[str] = 'https://zukan.pokemon.co.jp/detail/'
+    BASE_URL: Final[str] = 'https://zukan.pokemon.co.jp/detail'
     TIME_OUT: Final[int] = 5
 
     def find_by_id(self, pokemon_id: int) -> PokemonSpec:
@@ -28,11 +28,8 @@ class PokemonSpecRepository(IPokemonSpecRepository):
         Raises:
             HTTPError: ステータスコードが400系 or 500系
         """
-        _res = requests.get(
-            self.BASE_URL + f'{pokemon_id}',
-            timeout=self.TIME_OUT
-        )
-        _res.raise_for_status()
-        _soup = bs4.BeautifulSoup(_res.text, 'html.parser')
-        _raw_spec = _soup.select_one('#json-data').text
-        return PokemonSpec.create(_raw_spec)
+        res = requests.get(f'{self.BASE_URL}/{pokemon_id}', timeout=self.TIME_OUT)
+        res.raise_for_status()
+        soup = bs4.BeautifulSoup(res.text, 'html.parser')
+        raw_spec = soup.select_one('#json-data').text
+        return PokemonSpec.create(raw_spec)

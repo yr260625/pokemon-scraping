@@ -8,25 +8,24 @@ from dataclasses import dataclass
 class Ability:
     """ポケモン特性を保持する。
     """
-    pokemon_id: Final[int]
+    id: Final[int]
     name: Final[str]
 
-    def __init__(self, pokemon_id: int, name: str):
+    def __init__(self, ability_id: int, name: str):
         """コンストラクタ
 
         Args:
-            pokemon_id (int): 特性ID
+            ability_id (int): 特性ID
             name (str): 特性名
         """
         self.__validate(name)
-        object.__setattr__(self, "pokemon_id", pokemon_id)
+        object.__setattr__(self, "id", ability_id)
         object.__setattr__(self, "name", name)
 
     def __validate(self, name: str):
         """バリデーション
 
         Args:
-            pokemon_id (int): 特性ID
             name (str): 特性名
 
         Raises:
@@ -48,13 +47,13 @@ class Abilities:
         Returns:
             str: JSON文字列
         """
-        _mapping: Final[dict] = {}
+        ability_map: dict[str, str] = {}
         for ability in self.abilities:
-            _mapping.setdefault(ability.pokemon_id, ability.name)
-        return json.dumps(_mapping, ensure_ascii=False)
+            ability_map.setdefault(f'No.{ability.id}', ability.name)
+        return json.dumps(ability_map, ensure_ascii=False)
 
     @staticmethod
-    def create(abilities: list[dict]):
+    def create(abilities: list[dict[int, str]]):
         """特性一覧ファクトリー
 
         Args:
@@ -63,7 +62,7 @@ class Abilities:
         Returns:
             Abilities: 特性一覧オブジェクト
         """
-        _abilities = []
+        ability_list: list[Ability] = []
         for ability in abilities:
-            _abilities.append(Ability(ability["id"], ability["name"]))
-        return Abilities(tuple(_abilities))
+            ability_list.append(Ability(ability["id"], ability["name"]))
+        return Abilities(tuple(ability_list))

@@ -1,7 +1,7 @@
 """ポケモン図鑑"""
 import json
 import time
-import traceback
+
 from typing import Final
 from src.pokedex.model.pokemon_spec import PokemonSpec
 from src.pokedex.repository.pokemon_spec import IPokemonSpecRepository
@@ -37,15 +37,10 @@ class Pokedex():
     def release_all(self):
         """ポケモン図鑑を全解放
         """
-        try:
-            for pokemon_id in range(self.MIN_POKEMON_NUMBER, self.MAX_POKEMON_NUMBER + 1):
-                pokemon_spec = self.repository.find_by_id(pokemon_id)
-                self.add(pokemon_spec)
-                time.sleep(0.5)
-        except Exception as error:
-            print('エラーが発生しました。: No.=' + f'{pokemon_id}')
-            print(error)
-            print(traceback.format_exc())
+        for pokemon_id in range(self.MIN_POKEMON_NUMBER, self.MAX_POKEMON_NUMBER + 1):
+            pokemon_spec = self.repository.find_by_id(pokemon_id)
+            self.add(pokemon_spec)
+            time.sleep(0.5)
 
     def to_json(self) -> str:
         """ポケモン図鑑に追加された全てのポケモン諸元値をJSONに変換

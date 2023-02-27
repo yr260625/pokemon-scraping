@@ -28,8 +28,19 @@ class PokemonSpecRepository(IPokemonSpecRepository):
         Raises:
             HTTPError: ステータスコードが400系 or 500系
         """
-        res = requests.get(f'{self.BASE_URL}/{pokemon_id}', timeout=self.TIME_OUT)
-        res.raise_for_status()
-        soup = bs4.BeautifulSoup(res.text, 'html.parser')
-        raw_spec = soup.select_one('#json-data').text
-        return PokemonSpec.create(raw_spec)
+        try:
+            res = requests.get(f'{self.BASE_URL}/{pokemon_id}', timeout=self.TIME_OUT)
+            res.raise_for_status()
+            soup = bs4.BeautifulSoup(res.text, 'html.parser')
+            json_data = soup.select_one('#json-data')
+            if json_data is None:
+                raise ParseError
+            return PokemonSpec.create(json_data.text)
+        except Exception as e:
+            print(f'ID:{pokemon_id}のポケモン諸元値を取得できませんでした。')
+            raise e
+
+
+class ParseError(Exception):
+    """HTMLパースエラー
+    """

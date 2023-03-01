@@ -1,4 +1,4 @@
-"""ポケモン図鑑"""
+"""ポケモン諸元値コレクション"""
 import json
 import time
 
@@ -7,13 +7,14 @@ from src.pokedex.model.pokemon_spec import PokemonSpec
 from src.pokedex.repository.pokemon_spec import IPokemonSpecRepository
 
 
-class Pokedex():
+class PokemonSpecifications():
 
     """ポケモン諸元値の一覧(ポケモン図鑑)を保持、収集するコレクションクラス。
     """
 
     MIN_POKEMON_NUMBER: Final[int] = 1
     MAX_POKEMON_NUMBER: Final[int] = 1008
+    pokemon_specifications: Final[list[PokemonSpec]] = []
 
     def __init__(self, repository: IPokemonSpecRepository):
         """コンストラクタ
@@ -22,24 +23,13 @@ class Pokedex():
             repository (IPokemonSpecRepository): ポケモン諸元値リポジトリ
         """
         self.repository = repository
-        self.pokedex: tuple[PokemonSpec] = tuple()
-
-    def add(self, pokemon_spec: PokemonSpec):
-        """ポケモン諸元値オブジェクトをポケモン図鑑に追加
-
-        Args:
-            pokemon_spec (PokemonSpec): ポケモン諸元値オブジェクト
-        """
-        pokedex = list(self.pokedex)
-        pokedex.append(pokemon_spec)
-        self.pokedex = tuple(pokedex)
 
     def release_all(self):
         """ポケモン図鑑を全解放
         """
         for pokemon_id in range(self.MIN_POKEMON_NUMBER, self.MAX_POKEMON_NUMBER + 1):
             pokemon_spec = self.repository.find_by_id(pokemon_id)
-            self.add(pokemon_spec)
+            self.pokemon_specifications.append(pokemon_spec)
             time.sleep(0.5)
 
     def to_json(self) -> str:
@@ -48,7 +38,7 @@ class Pokedex():
         Returns:
             str: JSON文字列
         """
-        specs: list[dict] = []
-        for spec in self.pokedex:
-            specs.append(json.loads(spec.to_json()))
-        return json.dumps({"全ポケモンリスト": specs}, ensure_ascii=False)
+        specifications: list[dict] = []
+        for spec in self.pokemon_specifications:
+            specifications.append(json.loads(spec.to_json()))
+        return json.dumps({"全ポケモンリスト": specifications}, ensure_ascii=False)

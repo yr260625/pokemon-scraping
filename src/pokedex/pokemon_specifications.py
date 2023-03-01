@@ -14,7 +14,7 @@ class PokemonSpecifications():
 
     MIN_POKEMON_NUMBER: Final[int] = 1
     MAX_POKEMON_NUMBER: Final[int] = 1008
-    pokemon_specifications: Final[list[PokemonSpec]] = []
+    collection: Final[list[PokemonSpec]] = []
 
     def __init__(self, repository: IPokemonSpecRepository):
         """コンストラクタ
@@ -29,7 +29,7 @@ class PokemonSpecifications():
         """
         for pokemon_id in range(self.MIN_POKEMON_NUMBER, self.MAX_POKEMON_NUMBER + 1):
             pokemon_spec = self.repository.find_by_id(pokemon_id)
-            self.pokemon_specifications.append(pokemon_spec)
+            self.collection.append(pokemon_spec)
             time.sleep(0.5)
 
     def to_json(self) -> str:
@@ -39,6 +39,6 @@ class PokemonSpecifications():
             str: JSON文字列
         """
         specifications: list[dict] = []
-        for spec in self.pokemon_specifications:
+        for spec in self.collection:
             specifications.append(json.loads(spec.to_json()))
         return json.dumps({"全ポケモンリスト": specifications}, ensure_ascii=False)

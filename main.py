@@ -7,9 +7,9 @@ if __name__ == '__main__':
     try:
         print('処理を開始します。')
         pokemon_specifications = PokemonSpecifications(PokemonSpecRepository())
-        print('ポケモン図鑑収集中...')
-        pokemon_specifications.release_all()
-        print('ポケモン図鑑出力中...')
+        print('ポケモン諸元値収集中...')
+        pokemon_specifications.fetch_all()
+        print('ポケモン諸元値出力中...')
         print(pokemon_specifications.to_json())
         print('処理が完了しました。')
     except Exception as error:

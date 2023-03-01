@@ -9,7 +9,7 @@ from src.pokedex.repository.pokemon_spec import IPokemonSpecRepository
 
 class PokemonSpecifications():
 
-    """ポケモン諸元値の一覧(ポケモン図鑑)を保持、収集するコレクションクラス。
+    """ポケモン諸元値の一覧を保持、収集するコレクションクラス。
     """
 
     MIN_POKEMON_NUMBER: Final[int] = 1
@@ -24,16 +24,16 @@ class PokemonSpecifications():
         """
         self.repository = repository
 
-    def release_all(self):
-        """ポケモン図鑑を全解放
+    def fetch_all(self):
+        """ポケモン諸元値を全取得
         """
         for pokemon_id in range(self.MIN_POKEMON_NUMBER, self.MAX_POKEMON_NUMBER + 1):
-            pokemon_spec = self.repository.find_by_id(pokemon_id)
+            pokemon_spec = self.repository.fetch_by_id(pokemon_id)
             self.collection.append(pokemon_spec)
             time.sleep(0.5)
 
     def to_json(self) -> str:
-        """ポケモン図鑑に追加された全てのポケモン諸元値をJSONに変換
+        """全ポケモン諸元値をJSONに変換
 
         Returns:
             str: JSON文字列

@@ -9,7 +9,7 @@ class IPokemonSpecRepository(metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def find_by_id(self, pokemon_id: int) -> PokemonSpec:
+    def fetch_by_id(self, pokemon_id: int) -> PokemonSpec:
         """ポケモン諸元値取得
         """
         raise NotImplementedError

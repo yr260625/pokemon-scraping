@@ -16,7 +16,7 @@ class PokemonSpecRepository(IPokemonSpecRepository):
     BASE_URL: Final[str] = 'https://zukan.pokemon.co.jp/detail'
     TIME_OUT: Final[int] = 5
 
-    def find_by_id(self, pokemon_id: int) -> PokemonSpec:
+    def fetch_by_id(self, pokemon_id: int) -> PokemonSpec:
         """ポケモン諸元値取得
 
         Args:

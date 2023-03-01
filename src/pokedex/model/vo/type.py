@@ -65,7 +65,7 @@ class Type:
 class Types:
     """ポケモンのタイプ一覧を保持する。
     """
-    types: Final[tuple[Type]]
+    types: Final[list[Type]]
 
     def to_json(self) -> str:
         """タイプ一覧をJSONに変換
@@ -89,7 +89,7 @@ class Types:
         Returns:
             Types: タイプ一覧オブジェクト
         """
-        return Types((
+        return Types([
             Type(type_id1),
-            Type(type_id2)
-        ))
+            Type(type_id2),
+        ])

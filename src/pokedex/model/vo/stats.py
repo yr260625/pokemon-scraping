@@ -34,7 +34,7 @@ class Stats:
         object.__setattr__(self, "special_defense", special_defense)
         object.__setattr__(self, "speed", speed)
 
-    def __validate(self, *stats: tuple[int]):
+    def __validate(self, *stats: int):
         """バリデーション
 
         Raises:

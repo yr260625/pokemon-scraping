@@ -1,4 +1,4 @@
-"""ポケモン諸元値リポジトリー"""
+"""ポケモン諸元値リポジトリ"""
 from typing import Final
 import bs4
 import requests
@@ -27,6 +27,7 @@ class PokemonSpecRepository(IPokemonSpecRepository):
 
         Raises:
             HTTPError: ステータスコードが400系 or 500系
+            ParseError: HTMLパース失敗
         """
         try:
             res = requests.get(f'{self.BASE_URL}/{pokemon_id}', timeout=self.TIME_OUT)
@@ -42,5 +43,5 @@ class PokemonSpecRepository(IPokemonSpecRepository):
 
 
 class ParseError(Exception):
-    """HTMLパースエラー
+    """HTMLパース失敗
     """

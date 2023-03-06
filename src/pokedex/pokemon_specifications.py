@@ -8,7 +8,6 @@ from src.pokedex.repository.pokemon_spec import IPokemonSpecRepository
 
 
 class PokemonSpecifications():
-
     """ポケモン諸元値の一覧を保持、収集するコレクションクラス。
     """
 

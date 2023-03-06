@@ -4,7 +4,6 @@ from src.pokedex.model.pokemon_spec import PokemonSpec
 
 
 class IPokemonSpecRepository(metaclass=ABCMeta):
-
     """ポケモンの諸元値を取得、保持するリポジトリのインターフェース
     """
 

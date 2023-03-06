@@ -1,6 +1,6 @@
 """ポケモン特性 値オブジェクト"""
 import json
-from typing import Any, Final
+from typing import Any, Final, List, Dict
 from dataclasses import dataclass
 
 
@@ -39,7 +39,7 @@ class Ability:
 class Abilities:
     """ポケモンの特性一覧を保持する。
     """
-    abilities: Final[list[Ability]]
+    abilities: Final[List[Ability]]
 
     def to_json(self) -> str:
         """特性一覧をJSONに変換
@@ -47,22 +47,22 @@ class Abilities:
         Returns:
             str: JSON文字列
         """
-        ability_map: dict[str, str] = {}
+        ability_map: Dict[str, str] = {}
         for ability in self.abilities:
             ability_map.setdefault(f'No.{ability.id}', ability.name)
         return json.dumps(ability_map, ensure_ascii=False)
 
     @staticmethod
-    def create(abilities: list[dict[str, Any]]):
+    def create(abilities: List[Dict[str, Any]]):
         """特性一覧ファクトリー
 
         Args:
-            abilities (list[dict]): 特性一覧(辞書配列形式)
+            abilities (List[Dict[str, Any]]): 特性一覧(辞書配列形式)
 
         Returns:
             Abilities: 特性一覧オブジェクト
         """
-        ability_list: list[Ability] = []
+        ability_list: List[Ability] = []
         for ability in abilities:
             ability_list.append(Ability(ability["id"], ability["name"]))
         return Abilities(ability_list)

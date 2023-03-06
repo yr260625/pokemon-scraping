@@ -2,7 +2,7 @@
 import json
 import time
 
-from typing import Final
+from typing import Final, List, Dict
 from src.pokedex.model.pokemon_spec import PokemonSpec
 from src.pokedex.repository.pokemon_spec import IPokemonSpecRepository
 
@@ -13,7 +13,7 @@ class PokemonSpecifications():
 
     MIN_POKEMON_NUMBER: Final[int] = 1
     MAX_POKEMON_NUMBER: Final[int] = 1008
-    collection: Final[list[PokemonSpec]] = []
+    collection: Final[List[PokemonSpec]] = []
 
     def __init__(self, repository: IPokemonSpecRepository):
         """コンストラクタ
@@ -37,7 +37,7 @@ class PokemonSpecifications():
         Returns:
             str: JSON文字列
         """
-        specifications: list[dict] = []
+        specifications: List[Dict] = []
         for spec in self.collection:
             specifications.append(json.loads(spec.to_json()))
         return json.dumps({"全ポケモンリスト": specifications}, ensure_ascii=False)

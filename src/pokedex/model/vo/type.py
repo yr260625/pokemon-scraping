@@ -17,11 +17,11 @@ class Type:
         Args:
             type_id (int): タイプID
         """
-        self.__valtype_idate(type_id)
+        self.__validate(type_id)
         object.__setattr__(self, "type_id", type_id)
         object.__setattr__(self, "name", self.getName(type_id))
 
-    def __valtype_idate(self, type_id: int):
+    def __validate(self, type_id: int):
         if type_id < 0:
             raise ValueError("不正なタイプIDを検出しました。")
 

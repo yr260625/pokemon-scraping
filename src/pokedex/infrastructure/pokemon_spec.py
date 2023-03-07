@@ -13,8 +13,8 @@ class PokemonSpecRepository(IPokemonSpecRepository):
         IPokemonSpecRepository (_type_): ポケモン諸元値リポジトリインターフェース
     """
 
-    BASE_URL: Final[str] = 'https://zukan.pokemon.co.jp/detail'
-    TIME_OUT: Final[int] = 5
+    __BASE_URL: Final[str] = 'https://zukan.pokemon.co.jp/detail'
+    __TIME_OUT: Final[int] = 5
 
     def fetch_by_id(self, pokemon_id: int) -> PokemonSpec:
         """ポケモン諸元値取得
@@ -30,7 +30,7 @@ class PokemonSpecRepository(IPokemonSpecRepository):
             ParseError: HTMLパース失敗
         """
         try:
-            res = requests.get(f'{self.BASE_URL}/{pokemon_id}', timeout=self.TIME_OUT)
+            res = requests.get(f'{self.__BASE_URL}/{pokemon_id}', timeout=self.__TIME_OUT)
             res.raise_for_status()
             soup = bs4.BeautifulSoup(res.text, 'html.parser')
             json_data = soup.select_one('#json-data')

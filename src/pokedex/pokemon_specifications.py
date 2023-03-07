@@ -12,7 +12,7 @@ class PokemonSpecifications():
     """
 
     __MIN_POKEMON_NUMBER: Final[int] = 1
-    __MAX_POKEMON_NUMBER: Final[int] = 1
+    __MAX_POKEMON_NUMBER: Final[int] = 1008
     __collection: Final[List[PokemonSpec]] = []
 
     def __init__(self, repository: IPokemonSpecRepository):

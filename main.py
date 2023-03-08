@@ -1,16 +1,15 @@
 """起動スクリプト"""
 import traceback
-from src.pokedex.pokemon_specifications import PokemonSpecifications
+from src.pokedex.model.pokemon_specifications import PokemonSpecifications
+from src.pokedex.usecases import PokedexUsecases
 from src.pokedex.infrastructure.pokemon_spec import PokemonSpecRepository
 
 if __name__ == '__main__':
     try:
         print('処理を開始します。')
-        pokemon_specifications = PokemonSpecifications(PokemonSpecRepository())
-        print('ポケモン諸元値収集中...')
-        pokemon_specifications.fetch_all()
-        print('ポケモン諸元値出力中...')
-        print(pokemon_specifications.to_json())
+        pokedex_usecases = PokedexUsecases(PokemonSpecRepository())
+        completed_pokedex: PokemonSpecifications = pokedex_usecases.complete()
+        print(completed_pokedex.to_json())
         print('処理が完了しました。')
     except Exception as error:
         print(error)

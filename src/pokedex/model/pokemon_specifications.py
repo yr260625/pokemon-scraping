@@ -1,34 +1,43 @@
 """ポケモン諸元値コレクション"""
 import json
-import time
 from typing import Final
 from src.pokedex.model.pokemon_spec import PokemonSpec
-from src.pokedex.repository.pokemon_spec import IPokemonSpecRepository
 
 
 class PokemonSpecifications():
     """ポケモン諸元値の一覧を保持、収集するコレクションクラス。
     """
 
-    __MIN_POKEMON_NUMBER: Final[int] = 1
     __MAX_POKEMON_NUMBER: Final[int] = 1008
-    __collection: Final[list[PokemonSpec]] = []
 
-    def __init__(self, repository: IPokemonSpecRepository):
+    def __init__(self, collection: list[PokemonSpec]):
         """コンストラクタ
 
         Args:
             repository (IPokemonSpecRepository): ポケモン諸元値リポジトリ
         """
-        self.repository: IPokemonSpecRepository = repository
+        self.__collection: Final[list[PokemonSpec]] = collection
 
-    def fetch_all(self):
-        """ポケモン諸元値を全取得
+    def can_add(self) -> bool:
+        """コレクションに追加可能かどうか
+
+        Returns:
+            bool: 追加可能かどうか
         """
-        for pokemon_id in range(self.__MIN_POKEMON_NUMBER, self.__MAX_POKEMON_NUMBER + 1):
-            pokemon_spec: PokemonSpec = self.repository.fetch_by_id(pokemon_id)
-            self.__collection.append(pokemon_spec)
-            time.sleep(0.5)
+        return len(self.__collection) < self.__MAX_POKEMON_NUMBER
+
+    def add(self, pokemon_spec: PokemonSpec):
+        """ポケモン諸元値をコレクションに追加
+
+        Args:
+            pokemon_spec (PokemonSpec): ポケモン諸元値
+
+        Returns:
+            PokemonSpecifications: ポケモン諸元値コレクション
+        """
+        collection: Final[list[PokemonSpec]] = self.__collection[:]
+        collection.append(pokemon_spec)
+        return PokemonSpecifications(collection)
 
     def to_json(self) -> str:
         """全ポケモン諸元値をJSONに変換

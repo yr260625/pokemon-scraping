@@ -1,6 +1,6 @@
 """ポケモンタイプ 値オブジェクト"""
 import json
-from typing import Final
+from typing import Final, List, Dict
 from dataclasses import dataclass
 
 
@@ -19,13 +19,13 @@ class Type:
         """
         self.__validate(type_id)
         object.__setattr__(self, "type_id", type_id)
-        object.__setattr__(self, "name", self.getName(type_id))
+        object.__setattr__(self, "name", self.get_name(type_id))
 
     def __validate(self, type_id: int):
         if type_id < 0:
             raise ValueError("不正なタイプIDを検出しました。")
 
-    def getName(self, type_id: int) -> str:
+    def get_name(self, type_id: int) -> str:
         """タイプ名取得
 
         Args:
@@ -34,7 +34,7 @@ class Type:
         Returns:
             str: タイプ名
         """
-        _type_definition: Final[dict[int, str]] = {
+        _type_definition: Final[Dict[int, str]] = {
             0:  "なし",
             1:  "ノーマル",
             2:  "ほのお",
@@ -65,7 +65,7 @@ class Type:
 class Types:
     """ポケモンのタイプ一覧を保持する。
     """
-    types: Final[list[Type]]
+    types: Final[List[Type]]
 
     def to_json(self) -> str:
         """タイプ一覧をJSONに変換
@@ -73,7 +73,7 @@ class Types:
         Returns:
             str: JSON文字列
         """
-        type_map: dict[int, str] = {}
+        type_map: Dict[int, str] = {}
         for index, type_obj in enumerate(self.types, 1):
             type_map.setdefault(index, type_obj.name)
         return json.dumps(type_map, ensure_ascii=False)

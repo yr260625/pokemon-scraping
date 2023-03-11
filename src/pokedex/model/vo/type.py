@@ -1,6 +1,6 @@
 """ポケモンタイプ 値オブジェクト"""
 import json
-from typing import Final, List, Dict
+from typing import Final
 from dataclasses import dataclass
 
 
@@ -34,7 +34,7 @@ class Type:
         Returns:
             str: タイプ名
         """
-        _type_definition: Final[Dict[int, str]] = {
+        _type_definition: Final[dict[int, str]] = {
             0:  "なし",
             1:  "ノーマル",
             2:  "ほのお",
@@ -65,7 +65,7 @@ class Type:
 class Types:
     """ポケモンのタイプ一覧を保持する。
     """
-    types: Final[List[Type]]
+    types: Final[list[Type]]
 
     def to_json(self) -> str:
         """タイプ一覧をJSONに変換
@@ -73,7 +73,7 @@ class Types:
         Returns:
             str: JSON文字列
         """
-        type_map: Dict[int, str] = {}
+        type_map: dict[int, str] = {}
         for index, type_obj in enumerate(self.types, 1):
             type_map.setdefault(index, type_obj.name)
         return json.dumps(type_map, ensure_ascii=False)

@@ -19,13 +19,13 @@ class Type:
         """
         self.__validate(type_id)
         object.__setattr__(self, "type_id", type_id)
-        object.__setattr__(self, "name", self.getName(type_id))
+        object.__setattr__(self, "name", self.get_name(type_id))
 
     def __validate(self, type_id: int):
         if type_id < 0:
             raise ValueError("不正なタイプIDを検出しました。")
 
-    def getName(self, type_id: int) -> str:
+    def get_name(self, type_id: int) -> str:
         """タイプ名取得
 
         Args:

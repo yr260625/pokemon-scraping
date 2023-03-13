@@ -58,7 +58,8 @@ pokemon_spec, to_json
 |  ファイル名  |  役割  |
 | ---- | ---- |
 |  main.py  |  起動スクリプト、メインロジック |
-|  pokemon_specifications.py  |  ポケモン諸元値一覧に関する処理  |
+|  pokedex/usecases.py  |  ユースケース  |
+|  model/pokemon_specifications.py  |  ポケモン諸元値一覧に関する処理  |
 |  model/pokemon_spec.py  |  ポケモン諸元値に関する処理  |
 |  model/vo/*.py  |  各種諸元値に関する処理  |
 |  repository/pokemon_spec.py  |  ポケモン諸元値の参照処理(IF)  |
